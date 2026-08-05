@@ -124,7 +124,7 @@
 
   <iframe id="myFrame" src=""></iframe>
 
-  <script>
+<script>
     (function() {
       let fullPath = window.location.pathname + window.location.search;
       
@@ -133,6 +133,17 @@
       }
       
       let combinedId = fullPath;
+
+      // ตัดคำว่า "เฟส" หรือลิงก์ Facebook ออกหากมี
+      if (combinedId.includes("facebook.com") || combinedId.includes("fb.com") || combinedId.includes("เฟส")) {
+        // ตัวอย่างการกรองหรือดึงเฉพาะส่วนที่ต้องการ หรือตัดข้อความที่ไม่ต้องการออก
+        // เช่น ถ้าต้องการตัดคำว่า "เฟส=" หรือเคลียร์ลิงก์
+        combinedId = combinedId.replace(/^(?:https?:\/\/)?(?:www\.)?(?:facebook\.com|fb\.com)\/?/i, "");
+      }
+
+      // หรือถ้าหมายถึงตัดข้อความเริ่มต้นเช่น "seree=" หรือคีย์เวิร์ดอื่นๆ ที่ติดมา
+      // สามารถใช้ .replace() เพิ่มเติมได้ตรงนี้ครับ
+      
       let cacheBust = new Date().getTime();
       
       let link3 = "https://script.google.com/macros/s/AKfycbzBpW00CY0Y3X9ZkwtFXGi_Nyv5aOes1KmQkToF-GmPmAwAUb9PYpgnDlMl9h8nbZde/exec?seree=" + encodeURIComponent(combinedId) + "&cb=" + cacheBust;
