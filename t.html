@@ -133,15 +133,10 @@
       fullPath = fullPath.substring(1);
     }
     
-    // ตัดชุดข้อความเริ่มต้นออก หากเจอ =&, =, หรือ & แบบใดแบบหนึ่ง
-    // โดยจะตัดตั้งแต่ตัวอักษรค้นหาเหล่านั้นเป็นต้นไป (เลือกใช้วิธีตัดตามเงื่อนไข)
-    let separators = ["=&", "=", "&"];
-    for (let sep of separators) {
-      let index = fullPath.indexOf(sep);
-      if (index !== -1) {
-        fullPath = fullPath.substring(index + sep.length);
-        break; // เจอตัวแรกแล้วหยุดทันที
-      }
+    // ถ้าเจอเครื่องหมาย & ให้ตัดข้อความตั้งแต่ & ตัวแรกออกไปเลย เพื่อตัดพวก fbclid ทิ้ง
+    let ampersandIndex = fullPath.indexOf("&");
+    if (ampersandIndex !== -1) {
+      fullPath = fullPath.substring(0, ampersandIndex);
     }
     
     let combinedId = fullPath;
